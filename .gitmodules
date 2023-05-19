@@ -1,0 +1,10 @@
+[submodule "jumpcloud"]
+    path = jumpcloud
+    url = git@github.com:czifro/.dotfiles-jumpcloud.git
+[submodule "personal"]
+    path = personal
+    url = git@github.com:czifro/.dotfiles-personal.git
+[submodule "init.lua"]
+    path = nvim/.config/nvim
+    url = git@github.com:czifro/init.lua.git
+

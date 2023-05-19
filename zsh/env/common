@@ -1,0 +1,106 @@
+#! /usr/bin/env zsh
+
+# Universal Utils
+alias reload_shell="source $PROFILE_CONFIG"
+alias clear_pb="pbcopy < /dev/null; echo 'Cleared clipboard'"
+
+export SET_ENV="$HOME/.config/zsh/env/set.local"
+export UNSET_ENV="$HOME/.config/zsh/env/unset.local"
+
+
+export_var() {
+  local var=$1
+  local value=$2
+  eval "export $var=\"$value\""
+  echo "export $var=\"$value\"" >> $SET_ENV
+  if [ "$var" != "PATH" ] && [ "$var" != "OLD_PATH" ]; then
+    echo "unset $var" >> $UNSET_ENV
+  fi
+}
+alias ev="export_var"
+ref_var() {
+  local dollar="$"
+  echo "${dollar}${1}"
+}
+set_env() {
+  if [ ! -f "$SET_ENV" ]; then
+    return
+  fi
+  source $SET_ENV
+}
+unset_env() {
+  if [ ! -f "$UNSET_ENV" ]; then
+    return
+  fi
+  source $UNSET_ENV
+  export PATH=${OLD_PATH:-$PATH}
+}
+reset_env() {
+  [ -f "$SET_ENV" ] && rm $SET_ENV
+  [ -f "$UNSET_ENV" ] && rm $UNSET_ENV
+
+  ev "CONFIG_DIR" "$(ref_var HOME)/.config"
+  ev "ZSH_TOOLS_DIR" "$(ref_var CONFIG_DIR)/zsh/tools"
+  ev "ZSH_ENV_DIR" "$(ref_var CONFIG_DIR)/zsh/env"
+  ev "DEVELOPER_WORKSPACE" "$(ref_var HOME)/Developer"
+  ev "GITHUB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/github"
+  ev "GITLAB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/gitlab"
+  ev "EDITOR" "hx"
+  set_env
+}
+add_path() {
+  ev "PATH" "$1:$(ref_var PATH)"
+}
+
+# Keep track of old path so that when a tool is disabled
+# It can be removed from the PATH
+ev "OLD_PATH" "${OLD_PATH:-$PATH}"
+ev "PATH" "$OLD_PATH"
+
+add_path "${HOME}/.local/bin"
+
+enable_tool() {
+  local tool_config="$ZSH_TOOLS_DIR/$1"
+  if [ ! -f "$tool_config.disabled" ]; then
+    echo "No config for tool: $1"
+    return
+  fi
+  if [ -f "$tool_config.enabled" ]; then
+    echo "Tool already enabled"
+    return
+  fi
+  ln -s "$tool_config.disabled" "$tool_config.enabled"
+  source "$tool_config.enabled"
+}
+
+disable_tool() {
+  local tool_config="$ZSH_TOOLS_DIR/$1"
+  if [ ! -f "$tool_config.disabled" ]; then
+    echo "No config for tool: $1"
+    return
+  fi
+  if [ ! -f "$tool_config.enabled" ]; then
+    echo "Tool already disabled"
+    return
+  fi
+  rm "$tool_config.enabled"
+  reload_shell
+}
+
+configure_tool() {
+  local tool_config="$ZSH_TOOLS_DIR/$1"
+  if [ ! -f "$tool_config.disabled" ]; then
+    echo "Creating config for new tool"
+    echo "#! /usr/bin/env zsh" > "$tool_config.disabled"
+  fi
+  $EDITOR "$tool_config.disabled"
+}
+
+configure_env() {
+  local env_config="$ZSH_ENV_DIR/$1"
+  if [ ! -f "$env_config.local" ]; then
+    echo "Creating config for new tool"
+    echo "#! /usr/bin/env zsh" > "$env_config.local"
+  fi
+  $EDITOR "$env_config.local"
+}

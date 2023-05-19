@@ -1,0 +1,42 @@
+echo "Configuring shell..."
+
+export PROFILE_CONFIG="$HOME/.zprofile"
+source "$HOME/.config/zsh/env/common"
+
+unset_env
+reset_env
+
+# Load tool configurations
+local tools=($(ls $ZSH_TOOLS_DIR | grep ".enabled" | xargs))
+for tool in ${tools[@]}; do
+  source "$ZSH_TOOLS_DIR/$tool"
+done
+
+# Load environment configurations
+# Loading after tools to allow for environment specific overrides
+local envs=($(ls $ZSH_ENV_DIR))
+for env in ${envs[@]}; do
+  if [ "$env" = "common" ]; then
+    # Don't load twice
+    continue
+  fi
+  source "$ZSH_ENV_DIR/$env"
+done
+
+unset_env
+set_env
+
+open_rl_script="/Users/czifro/Library/Application\ Support/Steam/steamapps/common/rocketleague/RocketLeague.app/Contents/MacOS/TAGame ; exit;"
+
+alias open_rl="osascript -e 'tell application \"Terminal\" to do script \"$open_rl_script\"'"
+
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
+check_work_session() {
+  ps aux | grep ssh | grep 8888 > /dev/null
+
+  [ "$?" = 0 ] && echo 'Work session open' || echo 'Work session closed'
+}
+
+alias start_work_session="ssh -D 8888 -f -C -q -N czifro@work.vm"
+alias open_work_session="ssh -q czifro@work.vm || echo 'Unable to open work session'"
