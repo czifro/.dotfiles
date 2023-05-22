@@ -4,7 +4,6 @@
 [submodule "personal"]
     path = personal
     url = git@github.com:czifro/.dotfiles-personal.git
-[submodule "init.lua"]
+[submodule "nvim/.config/nvim"]
     path = nvim/.config/nvim
     url = git@github.com:czifro/init.lua.git
-
