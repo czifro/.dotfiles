@@ -1,6 +1,6 @@
 [submodule "jumpcloud"]
-    path = jumpcloud
-    url = git@github.com:czifro/.dotfiles-jumpcloud.git
+	path = jumpcloud
+	url = git@github.com:czifro/.dotfiles-jumpcloud.git
 [submodule "personal"]
     path = personal
     url = git@github.com:czifro/.dotfiles-personal.git
