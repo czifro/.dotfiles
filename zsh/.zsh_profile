@@ -26,17 +26,5 @@ done
 unset_env
 set_env
 
-open_rl_script="/Users/czifro/Library/Application\ Support/Steam/steamapps/common/rocketleague/RocketLeague.app/Contents/MacOS/TAGame ; exit;"
-
-alias open_rl="osascript -e 'tell application \"Terminal\" to do script \"$open_rl_script\"'"
-
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
-check_work_session() {
-  ps aux | grep ssh | grep 8888 > /dev/null
-
-  [ "$?" = 0 ] && echo 'Work session open' || echo 'Work session closed'
-}
-
-alias start_work_session="ssh -D 8888 -f -C -q -N czifro@work.vm"
-alias open_work_session="ssh -q czifro@work.vm || echo 'Unable to open work session'"
