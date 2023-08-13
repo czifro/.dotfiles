@@ -45,7 +45,7 @@ reset_env() {
   ev "DEVELOPER_WORKSPACE" "$(ref_var HOME)/Developer"
   ev "GITHUB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/github"
   ev "GITLAB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/gitlab"
-  ev "EDITOR" "hx"
+  ev "EDITOR" "nvim"
   set_env
 }
 add_path() {

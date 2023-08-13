@@ -2,10 +2,10 @@
 
 cd $(dirname $0)
 
-# mkdir -p ~/.config
+[ ! -d ~/.config ] && mkdir -p ~/.config
 
 for cfg in $(ls); do
   [ ! -d $cfg ] && continue
-  echo $cfg
+  [ -f $cfg/install.sh ] && sh $cfg/install.sh
 done
 

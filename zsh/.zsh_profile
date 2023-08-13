@@ -7,7 +7,7 @@ unset_env
 reset_env
 
 # Load tool configurations
-local tools=($(ls $ZSH_TOOLS_DIR | grep ".enabled" | xargs))
+local tools=($(ls $ZSH_TOOLS_DIR))
 for tool in ${tools[@]}; do
   source "$ZSH_TOOLS_DIR/$tool"
 done
@@ -25,6 +25,4 @@ done
 
 unset_env
 set_env
-
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
