@@ -2,6 +2,10 @@
 
 cd $(dirname $0)
 
-[ ! -d ~/.config/alacritty ] && mkdir -p ~/.config/alacritty
-[ ! -L ~/.config/alacritty/alacritty.yml ] && ln -s $(pwd)/alacritty.yml ~/.config/alacritty/alacritty.yml
+if [ ! -d ~/.config/alacritty ]; then
+  mkdir -p ~/.config/alacritty
+fi
+if [ ! -L ~/.config/alacritty/alacritty.yml ]; then
+  ln -s $(pwd)/alacritty.yml ~/.config/alacritty/alacritty.yml
+fi
 

@@ -2,14 +2,24 @@
 
 cd $(dirname $0)
 
-[ ! -d ~/.config/zsh/tools ] && mkdir -p ~/.config/zsh/tools
-[ ! -d ~/.config/zsh/env ] && mkdir -p ~/.config/zsh/env
+if [ ! -d ~/.config/zsh/tools ]; then
+  mkdir -p ~/.config/zsh/tools
+fi
+if [ ! -d ~/.config/zsh/env ]; then
+  mkdir -p ~/.config/zsh/env
+fi
 
 envs=($(ls env))
 for e in ${envs[@]}; do
-  [ ! -L ~/.config/zsh/env/$e ] && ln -s $(pwd)/env/$e ~/.config/zsh/env/$e
+  if [ ! -L ~/.config/zsh/env/$e ]; then
+    ln -s $(pwd)/env/$e ~/.config/zsh/env/$e
+  fi 
 done
 
-[ ! -L ~/.zshrc ] && ln -s $(pwd)/.zshrc ~/.zshrc
-[ ! -L ~/.zprofile ] && ln -s $(pwd)/.zsh_profile ~/.zprofile
+if [ ! -L ~/.zshrc ]; then
+  ln -s $(pwd)/.zshrc ~/.zshrc
+fi
+if [ ! -L ~/.zprofile ]; then
+  ln -s $(pwd)/.zsh_profile ~/.zprofile
+fi
 

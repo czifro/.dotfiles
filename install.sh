@@ -2,10 +2,14 @@
 
 cd $(dirname $0)
 
-[ ! -d ~/.config ] && mkdir -p ~/.config
+if [ ! -d ~/.config ]; then
+  mkdir -p ~/.config
+fi
 
 for cfg in $(ls); do
   [ ! -d $cfg ] && continue
-  [ -f $cfg/install.sh ] && sh $cfg/install.sh
+  if [ -f $cfg/install.sh ]; then
+    sh $cfg/install.sh || echo "Failed to install dotfile: $cfg"
+  fi
 done
 

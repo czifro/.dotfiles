@@ -130,15 +130,15 @@ focus-main:
 # Focus the next screen in the list going clockwise.
 focus-screen-cw:
   mod: mod1
-  key: n
+  key: s
 
 # Move the currently focused window onto the next screen in the list going counter-clockwise.
-swap-screen-ccw:
+swap-screen-cw:
   mod: mod2
   key: s
 
 # Move the currently focused window onto the next screen in the list going clockwise.
-# swap-screen-cw:
+# swap-screen-ccw:
 #   mod: mod2
 #   key: l
 
@@ -180,7 +180,7 @@ select-tall-right-layout:
 # Select wide layout
 select-wide-layout:
   mod: mod1
-  key: s
+  key: w
 
 # Select fullscreen layout
 select-fullscreen-layout:

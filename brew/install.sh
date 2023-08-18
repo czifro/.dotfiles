@@ -2,7 +2,11 @@
 
 cd $(dirname $0)
 
-[ ! -d ~/.config/zsh/tools ] && mkdir -p ~/.config/zsh/tools
+if [ ! -d ~/.config/zsh/tools ]; then
+  mkdir -p ~/.config/zsh/tools
+fi
 
-[ ! -f ~/.config/zsh/tools/brew ] && ln -s $(pwd)/brew.zsh ~/.config/zsh/tools/brew
+if [ ! -L ~/.config/zsh/tools/brew ]; then
+  ln -s $(pwd)/brew.zsh ~/.config/zsh/tools/brew
+fi
 

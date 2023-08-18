@@ -2,5 +2,7 @@
 
 cd $(dirname $0)
 
-[ ! -L ~/.amethyst.yml ] && ln -s $(pwd)/amethyst.yml ~/.amethyst.yml
+if [ ! -L ~/.amethyst.yml ]; then
+  ln -s $(pwd)/amethyst.yml ~/.amethyst.yml
+fi
 
