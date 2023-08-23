@@ -44,12 +44,13 @@ reset_env() {
   ev "ZSH_TOOLS_DIR" "$(ref_var CONFIG_DIR)/zsh/tools"
   ev "ZSH_ENV_DIR" "$(ref_var CONFIG_DIR)/zsh/env"
   ev "DEVELOPER_WORKSPACE" "$(ref_var HOME)/Developer"
-  ev "WORKSPACES" "$(ref_var WORKSPACES) $(ref_var HOME)/personal"
+  ev "WORKSPACES" ""
   ev "GITHUB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/github"
   ev "GITLAB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/gitlab"
   ev "VIM" "nvim"
   ev "EDITOR" "$(ref_var VIM)"
   ev "DOTFILES" "$(ref_var HOME)/.dotfiles"
+  ev "VIMRUNTIME" "$(ref_var HOME)/.local/nvim/share/nvim/runtime"
   set_env
 }
 add_path() {
