@@ -5,6 +5,14 @@ cd $(dirname $0)
 if [ ! -d ~/.config/zsh/tools ]; then
   mkdir -p ~/.config/zsh/tools
 fi
+
+tools=($(ls tools))
+for t in ${tools[@]}; do
+  if [ ! -L ~/.config/zsh/tools/$t ]; then
+    ln -s $(pwd)/tools/$t ~/.config/zsh/tools/$t
+  fi 
+done
+
 if [ ! -d ~/.config/zsh/env ]; then
   mkdir -p ~/.config/zsh/env
 fi
