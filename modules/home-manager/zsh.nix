@@ -9,7 +9,19 @@
   };
 
   programs.zsh = {
+    dotDir = ".config/zsh";
     enable = true;
+    oh-my-zsh = {
+      enable = true;
+      extraConfig = ''
+        export ZSH="$HOME/.oh-my-zsh"
+        CASE_SENSITIVE="true"
+      '';
+      plugins = [
+        "git"
+      ];
+      theme = "refined";
+    };
   };
 }
 
