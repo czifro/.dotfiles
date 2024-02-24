@@ -7,13 +7,11 @@
       target = ".config/zsh";
       recursive = true;
     };
+    ".zprofile".source = dotfiles/zsh/.zprofile;
   };
 
   programs.zsh = {
     enable = true;
-    profileExtra = ''
-      source $HOME/.zprofile
-    '';
   };
 }
 
