@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvim.url = "github:czifro/init.lua?ref=5b6eb1dcb1031177e3313d3315c1a2f5e5885a25";
+    nvim.url = "github:czifro/init.lua?ref=4938def8196144872178fbd50e1ef2685f1dcc4f";
 
     flake-utils.url = "github:numtide/flake-utils";
   };
