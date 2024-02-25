@@ -74,6 +74,7 @@
         modules = [
           modules.darwin
           home-manager.darwinModules.home-manager
+          modules.home-manager
           modules.core
           {
             home-manager = {

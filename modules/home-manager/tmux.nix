@@ -1,8 +1,10 @@
 {lib, pkgs, ...}:
 
 {
-  home.file = {
-    ".tmux.conf".source = dotfiles/tmux/.tmux.conf;
+  home = {
+    file = {
+      ".tmux.conf".source = dotfiles/tmux/.tmux.conf;
+    };
   };
 }
 
