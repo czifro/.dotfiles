@@ -19,7 +19,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, home-manager, darwin, nvim, flake-utils, ... } @ inputs :
+  outputs = { self, nixpkgs, home-manager, darwin, nvim, flake-utils, ... } @ inputs :
 
   let
 
@@ -58,7 +58,7 @@
     darwinConfigurations = {
       "Wills-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        pkgs = pkgs;
+        pkgs = import nixpkgs { system = "aarch64-darwin"; };
         modules = [
           modules.darwin
           home-manager.darwinModules.home-manager
