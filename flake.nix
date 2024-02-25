@@ -69,7 +69,6 @@
                 nvim.modules.nvim
                 modules.home-manager
               ];
-              extraSpecialArgs = { extraPkgs = packages; };
             };
           }
         ];
