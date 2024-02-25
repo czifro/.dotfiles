@@ -74,14 +74,13 @@
         modules = [
           modules.darwin
           home-manager.darwinModules.home-manager
-          modules.home-manager
           modules.core
           {
             home-manager = {
               home.packages = packages;
               users.czifro.imports = [
                 nvim.modules.nvim
-                ./modules/home-manager
+                modules.home-manager
               ];
               extraSpecialArgs = { extraPkgs = packages; };
             };
