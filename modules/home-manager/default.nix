@@ -14,14 +14,6 @@
   home = {
     stateVersion = "23.11";
 
-    packages = [
-      pkgs.git
-      pkgs.ripgrep
-      pkgs.tmux
-      pkgs.rustc
-      pkgs.cargo
-    ] ++ configs.home.packages;
-
     # This is an option, but I prefer splitting it out into neighboring nix files
     # file = {
     #   # tmux
@@ -30,7 +22,7 @@
     # };
 
     sessionVariables = {
-      pager = "less";
+      PAGER = "less";
     };
   };
 

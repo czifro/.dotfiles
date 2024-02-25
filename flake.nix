@@ -14,12 +14,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvim.url = "github:czifro/init.lua?ref=4938def8196144872178fbd50e1ef2685f1dcc4f";
+    nvim.url = "github:czifro/init.lua?ref=77ad99228fa6169234b80b46c86a7c3302da6dcc";
 
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, home-manager, darwin, nvim, flake-utils, ... } @ inputs :
+  outputs = { self, pkgs, home-manager, darwin, nvim, flake-utils, ... } @ inputs :
 
   let
 
@@ -30,14 +30,19 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.czifro.imports = [
-          nvim.modules.nvim
-          ./modules/home-manager
-        ];
       };
       users.users.czifro.home = (import ./modules/nixos/user.nix).homeDarwin;
     };
+    nvim = nvim;
   };
+
+  packages = [
+    pkgs.git
+    pkgs.ripgrep
+    pkgs.tmux
+    pkgs.rustc
+    pkgs.cargo
+  ] ++ nvim.packages;
 
   in
 
@@ -58,6 +63,8 @@
 
     modules = modules;
 
+    packages = packages;
+
     darwinConfigurations = {
       "Wills-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -65,6 +72,16 @@
           modules.darwin
           home-manager.darwinModules.home-manager
           modules.core
+          {
+            home-manager = {
+              home.packages = packages;
+              users.czifro.imports = [
+                nvim.modules.nvim
+                ./modules/home-manager
+              ];
+              extraSpecialArgs = { extraPkgs = packages; };
+            };
+          }
         ];
         specialArgs = { inherit inputs; };
       };
