@@ -1,4 +1,4 @@
-{ configs, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -18,8 +18,8 @@
       pkgs.git
       pkgs.ripgrep
       pkgs.tmux
-      pkgs.rustc
-      pkgs.cargo
+      pkgs.rustup
+      pkgs.go_1_21
     ];
 
     # This is an option, but I prefer splitting it out into neighboring nix files
@@ -28,10 +28,6 @@
     #   ".local/bin/tmux-sessionizer".source = ../core/tmux/tmux-sessionizer;
     #   ".tmux.conf".source = ../core/tmux/tmux.conf;
     # };
-
-    sessionVariables = {
-      PAGER = "less";
-    };
   };
 
   programs.home-manager.enable = true;

@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvim.url = "github:czifro/init.lua?ref=4d5537263ec1b3a30bba1b88d010226dbada5a97";
+    nvim.url = "github:czifro/init.lua?ref=f6ea877f70395bfd8407a4065fe418013a18240b";
 
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -23,18 +23,22 @@
 
   let
 
+  host = {
+    name = "Wills-MacBook-Pro";
+    system = "aarch64-darwin";
+  };
+
+  user = import ./modules/nixos/user.nix;
+
   modules = {
     darwin = import ./modules/darwin;
-    home-manager = import ./modules/home-manager;
-    core = {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-      };
-      users.users.czifro.home = (import ./modules/nixos/user.nix).homeDarwin;
+    home-manager = {
+      home = import ./modules/home-manager;
+      nvim = nvim.modules.home-manager.nvim;
     };
-    nvim = nvim.modules.nvim;
   };
+  
+  pkgs = import nixpkgs { system = host.system; };
 
   in
 
@@ -53,26 +57,31 @@
     #   };
     # };
 
+    host = host;
+
+    user = user;
+
     modules = modules;
 
     darwinConfigurations = {
-      "Wills-MacBook-Pro" = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        pkgs = import nixpkgs { system = "aarch64-darwin"; };
+      ${host.name} = darwin.lib.darwinSystem {
+        system = host.system;
+        pkgs = pkgs;
+        modules = [ modules.darwin ];
+        specialArgs = {
+          inherit inputs;
+          user = user;
+        };
+      };
+    };
+
+    homeConfigurations = {
+      ${user.name} = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
         modules = [
-          modules.darwin
-          home-manager.darwinModules.home-manager
-          modules.core
-          {
-            home-manager = {
-              users.czifro.imports = [
-                nvim.modules.nvim
-                modules.home-manager
-              ];
-            };
-          }
+          modules.home-manager.home
+          modules.home-manager.nvim
         ];
-        specialArgs = { inherit inputs; };
       };
     };
   };

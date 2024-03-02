@@ -39,17 +39,17 @@ reset_env() {
   [ -f "$SET_ENV" ] && rm $SET_ENV
   [ -f "$UNSET_ENV" ] && rm $UNSET_ENV
 
-  ev "XDG_CONFIG_HOME" "$(ref_var HOME)/.config"
-  ev "CONFIG_DIR" "$(ref_var XDG_CONFIG_HOME)"
-  ev "ZSH_TOOLS_DIR" "$(ref_var CONFIG_DIR)/zsh/tools"
-  ev "ZSH_ENV_DIR" "$(ref_var CONFIG_DIR)/zsh/env"
-  ev "DEVELOPER_WORKSPACE" "$(ref_var HOME)/Developer"
-  ev "WORKSPACES" ""
-  ev "GITHUB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/github"
-  ev "GITLAB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/gitlab"
-  ev "VIM" "nvim"
-  ev "EDITOR" "$(ref_var VIM)"
-  ev "DOTFILES" "$(ref_var HOME)/.dotfiles"
+  # ev "XDG_CONFIG_HOME" "$(ref_var HOME)/.config"
+  # ev "CONFIG_DIR" "$(ref_var XDG_CONFIG_HOME)"
+  # ev "ZSH_TOOLS_DIR" "$(ref_var CONFIG_DIR)/zsh/tools"
+  # ev "ZSH_ENV_DIR" "$(ref_var CONFIG_DIR)/zsh/env"
+  # ev "DEVELOPER_WORKSPACE" "$(ref_var HOME)/Developer"
+  # ev "WORKSPACES" ""
+  # ev "GITHUB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/github"
+  # ev "GITLAB_WORKSPACE" "$(ref_var DEVELOPER_WORKSPACE)/gitlab"
+  # ev "VIM" "nvim"
+  # ev "EDITOR" "$(ref_var VIM)"
+  # ev "DOTFILES" "$(ref_var HOME)/.dotfiles"
   ev "VIMRUNTIME" "$(ref_var HOME)/.local/nvim/share/nvim/runtime"
   set_env
 }
@@ -57,12 +57,7 @@ add_path() {
   ev "PATH" "$1:$(ref_var PATH)"
 }
 
-# Keep track of old path so that when a tool is disabled
-# It can be removed from the PATH
-ev "OLD_PATH" "${OLD_PATH:-$PATH}"
-ev "PATH" "$OLD_PATH"
-
-add_path "${HOME}/.local/bin"
+# add_path "${HOME}/.local/bin"
 
 enable_tool() {
   local tool_config="$ZSH_TOOLS_DIR/$1"

@@ -1,18 +1,25 @@
-{ config, lib, pkgs, ... }:
-
-let
-
-  user = import ./../nixos/user.nix { };
-
-in
+{ config, lib, pkgs, user, ... }:
 
 {
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages =
-    [
+
+  programs.zsh.enable = true;
+  programs.zsh.loginShellInit = ''
+    source $HOME/.zprofile
+  '';
+
+  environment = {
+    # List packages installed in system profile. To search by name, run:
+    # $ nix-env -qaP | grep wget
+    systemPackages = [
       pkgs.home-manager
+      pkgs.coreutils
     ];
+
+    shells = [ pkgs.bash pkgs.zsh ];
+    loginShell = pkgs.zsh;
+    systemPath = [ "/opt/homebrew/bin" ];
+    pathsToLink = [ "/Application" ];
+  };
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
@@ -34,5 +41,7 @@ in
       FXEnableExtensionChangeWarning = false;
     };
   };
+
+  users.users.${user.name}.home = user.homeDarwin;
 }
 

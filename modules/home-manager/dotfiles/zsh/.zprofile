@@ -3,6 +3,10 @@ echo "Configuring shell..."
 export PROFILE_CONFIG="$HOME/.zprofile"
 source "$HOME/.config/zsh/env/common"
 
+# Keep track of old path so that when a tool is disabled
+# It can be removed from the PATH
+ev "OLD_PATH" "${PATH}"
+
 unset_env
 reset_env
 
